@@ -7,14 +7,14 @@
 
 #######################################
 
-from flask import Flask
-from flask_restful import Resource, Api, reqparse
+from flask import Flask, jsonify, request
+#from flask_restful import Resource, Api, reqparse
 #import pandas as pd
 
 app = Flask(__name__)
 #api = Api(app)
 
-@app.route('/')
+@app.route('/home')
 def home_view():
     return "<h1>Home view</h1>"
 
@@ -59,11 +59,14 @@ def home_view():
 #api.add_resource(Users, '/users')  # '/users' is our entry point for Users
 
 
-@app.route('/', methods=['GET'])
-def get_function():
-    #data = pd.read_csv('users.csv')
-    data = {'test': 'hello-flask'}
-    return {'data': data}, 200
+@app.route('/', methods=['GET', 'Post'])
+def function():
+    if request.method == 'GET':
+        return jsonify({'data': {'data here': 8492834}}), 200
+    elif request.method == 'POST':
+        return jsonify({'you sent': request.get_json()}), 201
+    else:
+        return {}, 400
 
 #if __name__ == '__main__':
 #    app.run()  # run our Flask app
