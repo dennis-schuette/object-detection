@@ -12,14 +12,14 @@ from flask_restful import Resource, Api, reqparse
 #import pandas as pd
 
 app = Flask(__name__)
-api = Api(app)
+#api = Api(app)
 
 @app.route('/')
 def home_view():
     return "<h1>Home view</h1>"
 
 
-class Users(Resource):
+#class Users(Resource):
     ### post request
     # def post(self):
     #     parser = reqparse.RequestParser()  # initialize
@@ -49,15 +49,21 @@ class Users(Resource):
     #         data.to_csv('users.csv', index=False)
 
     ### get request
-    def get(self):
-        #data = pd.read_csv('users.csv')
-        data = {'test': 'hello-world'}
-        return {'data': data}, 200
+ #   def get(self):
+ #       #data = pd.read_csv('users.csv')
+ #       data = {'test': 'hello-world'}
+ #       return {'data': data}, 200
 
     
 
-api.add_resource(Users, '/users')  # '/users' is our entry point for Users
+#api.add_resource(Users, '/users')  # '/users' is our entry point for Users
 
+
+@app.route('/users', methods=['GET'])
+def get_function():
+    #data = pd.read_csv('users.csv')
+    data = {'test': 'hello-flask'}
+    return {'data': data}, 200
 
 #if __name__ == '__main__':
 #    app.run()  # run our Flask app
