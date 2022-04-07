@@ -59,10 +59,10 @@ def home_view():
 #api.add_resource(Users, '/users')  # '/users' is our entry point for Users
 
 
-@app.route('/', methods=['GET', 'Post'])
+@app.route('/', methods=['GET', 'POST'])
 def function():
     if request.method == 'GET':
-        return jsonify({'data': {'data here': 8492834}}), 200
+        return jsonify({'data': 9029345}), 200
     elif request.method == 'POST':
         return jsonify({'you sent': request.get_json()}), 201
     else:
