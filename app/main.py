@@ -9,7 +9,7 @@
 
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-import pandas as pd
+#import pandas as pd
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,37 +17,37 @@ api = Api(app)
 
 class Users(Resource):
     ### post request
-    def post(self):
-        parser = reqparse.RequestParser()  # initialize
+    # def post(self):
+    #     parser = reqparse.RequestParser()  # initialize
         
-        parser.add_argument('userId', required=True)  # add args
-        parser.add_argument('name', required=True)
-        parser.add_argument('city', required=True)
+    #     parser.add_argument('userId', required=True)  # add args
+    #     parser.add_argument('name', required=True)
+    #     parser.add_argument('city', required=True)
         
-        args = parser.parse_args()  # parse arguments to dictionary
+    #     args = parser.parse_args()  # parse arguments to dictionary
         
-        # create new dataframe containing new values
-        new_data = pd.DataFrame({
-            'userId': args['userId'],
-            'name': args['name'],
-            'city': args['city'],
-            'locations': [[]]
-        })
-        # read our CSV
-        data = pd.read_csv('users.csv')
+    #     # create new dataframe containing new values
+    #     new_data = pd.DataFrame({
+    #         'userId': args['userId'],
+    #         'name': args['name'],
+    #         'city': args['city'],
+    #         'locations': [[]]
+    #     })
+    #     # read our CSV
+    #     data = pd.read_csv('users.csv')
 
-        if args['userId'] in list(data['userId']):
-            return {'message': 'user already exists."'}, 401
-        else:
-            # add the newly provided values
-            data = data.append(new_data, ignore_index=True)
-            # save back to CSV
-            data.to_csv('users.csv', index=False)
+    #     if args['userId'] in list(data['userId']):
+    #         return {'message': 'user already exists."'}, 401
+    #     else:
+    #         # add the newly provided values
+    #         data = data.append(new_data, ignore_index=True)
+    #         # save back to CSV
+    #         data.to_csv('users.csv', index=False)
 
     ### get request
     def get(self):
-        data = pd.read_csv('users.csv')
-        data = data.to_dict()
+        #data = pd.read_csv('users.csv')
+        data = {'test': 'hello-world'}
         return {'data': data}, 200
 
     
