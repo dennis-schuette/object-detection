@@ -59,7 +59,7 @@ def home_view():
 #api.add_resource(Users, '/users')  # '/users' is our entry point for Users
 
 
-@app.route('/users', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_function():
     #data = pd.read_csv('users.csv')
     data = {'test': 'hello-flask'}
