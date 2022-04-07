@@ -14,6 +14,10 @@ from flask_restful import Resource, Api, reqparse
 app = Flask(__name__)
 api = Api(app)
 
+@app.route('/')
+def home_view():
+    return "<h1>Home view</h1>"
+
 
 class Users(Resource):
     ### post request
