@@ -100,12 +100,12 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1, r
             print("Font not found, using default font.")
             font = ImageFont.load_default()
 
-    res_dict={'label': [], 'box': [], 'score': []}
+    res_dict={'label': [], 'score': []}
     for i in range(min(boxes.shape[0], max_boxes)):
         if scores[i] >= min_score:
             
             res_dict['label'].append(class_names[i].decode('utf-8'))
-            res_dict['box'].append(boxes[i])
+            #res_dict['box'].append(boxes[i])
             res_dict['score'].append(scores[i])
             
             if return_image:

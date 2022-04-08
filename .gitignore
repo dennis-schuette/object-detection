@@ -1,3 +1,4 @@
 archive/
 app/images
 *__pycache__
+app/test.py
