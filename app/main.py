@@ -7,66 +7,58 @@
 
 #######################################
 
-from flask import Flask, jsonify, request
-#from flask_restful import Resource, Api, reqparse
+from flask import Flask  #, jsonify, request
+from flask_restful import Resource, Api, reqparse
+from app.model import *
 #import pandas as pd
+import werkzeug
 
 app = Flask(__name__)
-#api = Api(app)
+api = Api(app)
+
+#### startup model
+
 
 @app.route('/home')
 def home_view():
-    return "<h1>Home view</h1>"
+    return "<h1>model ready</h1>"
 
+# class trigger(Resource):
+#     def get(self):
+#         #data = pd.read_csv('users.csv')
+#         data = {'test': 'hello-world'}
+#         return {'data': data}, 200
 
-#class Users(Resource):
-    ### post request
-    # def post(self):
-    #     parser = reqparse.RequestParser()  # initialize
+#     def post(self):
+#         parser = reqparse.RequestParser()  # initialize
         
-    #     parser.add_argument('userId', required=True)  # add args
-    #     parser.add_argument('name', required=True)
-    #     parser.add_argument('city', required=True)
-        
-    #     args = parser.parse_args()  # parse arguments to dictionary
-        
-    #     # create new dataframe containing new values
-    #     new_data = pd.DataFrame({
-    #         'userId': args['userId'],
-    #         'name': args['name'],
-    #         'city': args['city'],
-    #         'locations': [[]]
-    #     })
-    #     # read our CSV
-    #     data = pd.read_csv('users.csv')
+#         parser.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')  # add args
+#         args = parser.parse_args()  # parse arguments to dictionary
 
-    #     if args['userId'] in list(data['userId']):
-    #         return {'message': 'user already exists."'}, 401
-    #     else:
-    #         # add the newly provided values
-    #         data = data.append(new_data, ignore_index=True)
-    #         # save back to CSV
-    #         data.to_csv('users.csv', index=False)
+#         image_file = args['file']
+#         print(image_file)
+#         #image_file.save("your_file_name.jpg")
 
-    ### get request
- #   def get(self):
- #       #data = pd.read_csv('users.csv')
- #       data = {'test': 'hello-world'}
- #       return {'data': data}, 200
+#         return {'data received': image_file}, 200
+
+
+class UploadImage(Resource):
+    def post(self):
+        parse = reqparse.RequestParser()
+        parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+        args = parse.parse_args()
+        image_file = args['file']
+        image_file.save("tmp.jpeg")
+        img, res = detect_img('tmp', img_suffix='jpeg')
+
+        return {'data': res}, 200
 
     
 
-#api.add_resource(Users, '/users')  # '/users' is our entry point for Users
+api.add_resource(UploadImage, '/')
 
 
-@app.route('/', methods=['GET', 'POST'])
-def function():
-    if request.method == 'GET':
-        return jsonify({'data': 9029345}), 200
-    elif request.method == 'POST':
-        return jsonify({'you sent': request.get_json()}), 201
-    else:
-        return {}, 400
 
-#if __name__ == '__main__':
-#    app.run()  # run our Flask app
+
+
+# https://www.youtube.com/watch?v=s_ht4AKnWZg
