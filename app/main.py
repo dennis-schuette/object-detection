@@ -50,15 +50,13 @@ class UploadImage(Resource):
         image_file = args['file']
         image_file.save("tmp.jpeg")
         img, res = detect_img('tmp', img_suffix='jpeg')
-
+        res['score'] = np_to_float(res)
+        print(res)
         return {'data': res}, 200
 
     
 
 api.add_resource(UploadImage, '/')
-
-
-
 
 
 # https://www.youtube.com/watch?v=s_ht4AKnWZg

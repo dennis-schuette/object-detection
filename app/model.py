@@ -22,6 +22,12 @@ import time
 
 
 # ---------------------------------------------
+def np_to_float(res):
+    float_list=[]
+    for i in res['score']:
+        float_list.append(float(i))
+    return float_list
+    
 def display_image(image):
     fig = plt.figure(figsize=(20, 15))
     plt.grid(False)
