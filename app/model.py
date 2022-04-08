@@ -1,7 +1,13 @@
 #@title Imports and function definitions
 
 # For running inference on the TF-Hub module.
-import tensorflow as tf
+#import tensorflow as tf
+from tensorflow.python.ops.io_ops import read_file
+from tensorflow.python.ops.gen_image_ops import decode_jpeg
+from tensorflow.python.ops.image_ops_impl import convert_image_dtype
+from tensorflow.python.framework.dtypes import *
+from tensorflow.python.ops.array_ops import newaxis
+
 import tensorflow_hub as hub
 # For downloading the image.
 import matplotlib.pyplot as plt
@@ -27,7 +33,7 @@ def np_to_float(res):
     for i in res['score']:
         float_list.append(float(i))
     return float_list
-    
+
 def display_image(image):
     fig = plt.figure(figsize=(20, 15))
     plt.grid(False)
@@ -134,15 +140,17 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1, r
     else:
         return res_dict
 
+
 def load_img(path):
-    img = tf.io.read_file(path)
-    img = tf.image.decode_jpeg(img, channels=3)
+    img = read_file(path)
+    img = decode_jpeg(img, channels=3)
     return img
+
 
 def run_detector(detector, path, return_image=True):
     img = load_img(path)
 
-    converted_img = tf.image.convert_image_dtype(img, tf.float32)[tf.newaxis, ...]
+    converted_img = convert_image_dtype(img, float32)[newaxis, ...]
     start_time = time.time()
     result = detector(converted_img)
     end_time = time.time()
