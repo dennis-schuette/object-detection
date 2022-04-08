@@ -19,7 +19,7 @@ api = Api(app)
 #### startup model
 
 
-@app.route('/home')
+@app.route('/')
 def home_view():
     return "<h1>model ready</h1>"
 
